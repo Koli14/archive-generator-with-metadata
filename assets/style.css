@@ -1,4 +1,5 @@
 /*
+ @import './fontawsome/all.min.css';
  Only custom marker for summary/details
  For cross browser compatible styling hide Firefox's marker by setting summary { display: block }
  and Chrome and Safari's marker by setting ::-webkit-details-marker {display: none;}
