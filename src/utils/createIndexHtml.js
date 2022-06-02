@@ -1,6 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import { readdir } from 'node:fs/promises';
+import createContent from './createContent.js';
 
 export default async function createIndexHtml(srcArchiveDir, archiveDir) {
   let indexTemplate = fs.readFileSync('templates/index.html', 'utf8');
@@ -21,7 +22,7 @@ export default async function createIndexHtml(srcArchiveDir, archiveDir) {
           childs += fileTemplate.replace('${name}', fileNode);
         }
       }
-
+      createContent();
       return parent.replace('${childs}', childs);
     } catch (err) {
       console.error(err);
