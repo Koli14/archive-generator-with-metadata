@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/Koli14/archive-generator/issues"
   },
-  "homepage": "https://github.com/Koli14/archive-generator#readme"
+  "homepage": "https://github.com/Koli14/archive-generator#readme",
+  "dependencies": {
+    "fs-extra": "^10.1.0"
+  }
 }

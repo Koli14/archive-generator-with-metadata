@@ -1,0 +1,108 @@
+/*
+ Only custom marker for summary/details
+ For cross browser compatible styling hide Firefox's marker by setting summary { display: block }
+ and Chrome and Safari's marker by setting ::-webkit-details-marker {display: none;}
+*/
+
+body {
+  height: 100vh;
+  font-family: arial;
+  margin: 0;
+}
+
+iframe {
+  flex-grow: 1;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.container-fluid a {
+  color: black;
+  text-decoration: none;
+}
+
+.tree-nav {
+  min-width: 450px;
+}
+
+summary {
+  display: block;
+  cursor: pointer;
+  outline: 0;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+.tree-nav__item {
+  display: block;
+  white-space: nowrap;
+  position: relative;
+}
+.tree-nav__item.is-expandable::before {
+  border-left: 1px solid #333;
+  content: '';
+  height: 100%;
+  left: 12.8px;
+  position: absolute;
+  top: 28px;
+  height: calc(100% - 28px);
+}
+.tree-nav__item .tree-nav__item {
+  margin-left: 28px;
+}
+.tree-nav__item.is-expandable[open] > .tree-nav__item-title::before {
+  font-family: Fontawesome;
+  transform: rotate(90deg);
+}
+.tree-nav__item.is-expandable > .tree-nav__item-title {
+  padding-left: 28px;
+}
+.tree-nav__item.is-expandable > .tree-nav__item-title::before {
+  position: absolute;
+  will-change: transform;
+  transition: transform 300ms ease;
+  font-family: Fontawesome;
+  content: '\f054';
+  left: 0;
+  display: inline-block;
+  width: 25.6px;
+  text-align: center;
+}
+
+.tree-nav__item-title {
+  cursor: pointer;
+  display: block;
+  outline: 0;
+  line-height: 30px;
+}
+.tree-nav__item-title:hover {
+  color: #0a58ca;
+}
+.tree-nav__item-title .fas {
+  display: inline;
+  padding-left: 16px;
+  margin-right: 12.8px;
+  color: #666;
+  position: relative;
+}
+.tree-nav__item-title .fas::before {
+  top: 0;
+  position: absolute;
+  left: 0;
+  display: inline-block;
+  width: 30px;
+  text-align: center;
+}
+
+.tree-nav__item-title::-webkit-details-marker {
+  display: none;
+}
+
+.breadcrumb {
+  padding: 0.75rem 1rem !important;
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
+}
