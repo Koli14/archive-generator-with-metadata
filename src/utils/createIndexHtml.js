@@ -11,21 +11,20 @@ export default async function createIndexHtml(archiveDir, archiveContentDir) {
   async function createRecurcsiveTreeItem(dir, parent = '${childs}') {
     try {
       const fileNodes = await readdir(dir);
-
+      const relativePath = './' + path.relative(archiveDir, dir).replaceAll(path.sep, '/') + '/';
       let childs = '';
       for (const fileNode of fileNodes) {
-        const filePath = path.resolve(dir, fileNode);
+        const filePath = path.resolve(dir, fileNode).replaceAll(path.sep, '/');
+
         const stat = fs.lstatSync(filePath);
         if (stat && stat.isDirectory()) {
-          childs += folderTemplate.replace('${name}', fileNode).replace('${href}', filePath);
+          childs += folderTemplate.replace('${name}', fileNode).replace('${href}', relativePath + fileNode);
           childs = await createRecurcsiveTreeItem(filePath, childs);
         } else {
-          childs += fileTemplate.replace('${name}', fileNode).replace('${href}', filePath);
+          childs += fileTemplate.replace('${name}', fileNode).replace('${href}', relativePath + fileNode);
         }
       }
-      createContent(archiveContentDir, dir);
-      console.log(' ');
-      console.log(' ');
+      createContent(archiveDir, archiveContentDir, dir, fileNodes);
       console.log(' ');
 
       return parent.replace('${childs}', childs);

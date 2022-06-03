@@ -10,7 +10,6 @@ export default function generator(args) {
   const archiveAssetsDir = archiveDir + '/assets';
   copyFolders(srcArchiveDir, archiveContentDir);
   copyFolders(assetsDir, archiveAssetsDir);
-  console.log(archiveDir, archiveContentDir);
 
   createIndexHtml(archiveDir, archiveContentDir);
 }
