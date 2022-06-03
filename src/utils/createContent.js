@@ -1,13 +1,14 @@
-import path from 'path';
 import fs from 'fs-extra';
-import formatBytes from './formatBytes.js';
+import path from 'path';
+import { formatBytes, createEmbed } from './index.js';
 
-export default function createContent(archiveDir, archiveContentDir, dir, fileNodes) {
+export default function createContent(archiveContentDir, dir, fileNodes) {
   const page = fs.readFileSync('templates/content/page.html', 'utf8');
   const breadCrumbItem = fs.readFileSync('templates/content/breadCrumbItem.html', 'utf8');
   const activebreadCrumbItem = fs.readFileSync('templates/content/activeBreadcrumbItem.html', 'utf8');
   const table = fs.readFileSync('templates/content/table.html', 'utf8');
   const tableRow = fs.readFileSync('templates/content/tableRow.html', 'utf8');
+
   const breadcrumb = path
     .relative(archiveContentDir, dir)
     .split(path.sep)
@@ -16,7 +17,6 @@ export default function createContent(archiveDir, archiveContentDir, dir, fileNo
       for (let j = 0; j <= index; j++) {
         url += '/' + array[j];
       }
-
       if (index == array.length - 1) {
         return activebreadCrumbItem.replace('${item}', item);
       }
@@ -29,8 +29,9 @@ export default function createContent(archiveDir, archiveContentDir, dir, fileNo
       const itemDir = dir + '/' + item;
       //console.log(item, itemDir);
       const stat = fs.lstatSync(itemDir);
-      if (item == 'Carbon_Z_IAS_Tita') {
-        console.log(dir);
+
+      if (stat.isFile()) {
+        createEmbed(archiveContentDir, dir, item);
       }
 
       return tableRow
@@ -46,7 +47,7 @@ export default function createContent(archiveDir, archiveContentDir, dir, fileNo
   const assetPath = path.relative(dir, archiveContentDir) ? path.relative(dir, archiveContentDir) : './';
 
   const pageHtml = page
-    .replace('${title}', dir)
+    .replace('${title}', path.basename(dir))
     .replaceAll('${assetsPath}', assetPath)
     .replace('${breadcrumb}', breadcrumb)
     .replace('${content}', table.replace('${rows}', tableRows));

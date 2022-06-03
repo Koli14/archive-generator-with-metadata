@@ -24,7 +24,7 @@ export default async function createIndexHtml(archiveDir, archiveContentDir) {
           childs += fileTemplate.replace('${name}', fileNode).replace('${href}', relativePath + fileNode);
         }
       }
-      createContent(archiveDir, archiveContentDir, dir, fileNodes);
+      createContent(archiveContentDir, dir, fileNodes);
       console.log(' ');
 
       return parent.replace('${childs}', childs);
