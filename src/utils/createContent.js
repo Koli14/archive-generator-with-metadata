@@ -2,17 +2,23 @@ import fs from 'fs-extra';
 import path from 'path';
 import { formatBytes, createEmbed } from './index.js';
 
-export default function createContent(archiveContentDir, dir, fileNodes) {
+export default function createContent(archiveDir, archiveContentDir, dir, fileNodes) {
   const page = fs.readFileSync('templates/content/page.html', 'utf8');
   const breadCrumbItem = fs.readFileSync('templates/content/breadCrumbItem.html', 'utf8');
   const activebreadCrumbItem = fs.readFileSync('templates/content/activeBreadcrumbItem.html', 'utf8');
   const table = fs.readFileSync('templates/content/table.html', 'utf8');
   const tableRow = fs.readFileSync('templates/content/tableRow.html', 'utf8');
 
+  // console.log('XXX');
+
+  // console.log(dir, fileNodes);
+
   const breadcrumb = path
-    .relative(archiveContentDir, dir)
+    .relative(archiveDir, dir)
     .split(path.sep)
     .map((item, index, array) => {
+      //console.log(item, index, array);
+
       if (index == array.length - 1) {
         return activebreadCrumbItem.replace('${item}', item);
       }
@@ -27,7 +33,7 @@ export default function createContent(archiveContentDir, dir, fileNodes) {
       const stat = fs.lstatSync(itemDir);
 
       if (stat.isFile()) {
-        createEmbed(archiveContentDir, dir, item);
+        createEmbed(archiveDir, archiveContentDir, dir, item);
       }
 
       return tableRow

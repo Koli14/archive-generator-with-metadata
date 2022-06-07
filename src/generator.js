@@ -5,11 +5,12 @@ export default function generator(args) {
   let [srcArchiveDir, archiveDir] = args;
   srcArchiveDir = path.resolve(srcArchiveDir);
   archiveDir = path.resolve(archiveDir).replaceAll(path.sep, '/');
-  const archiveContentDir = archiveDir + '/content';
+  const projectTitle = path.basename(srcArchiveDir);
+  const archiveContentDir = archiveDir + '/' + projectTitle;
   const assetsDir = './assets';
   const archiveAssetsDir = archiveDir + '/assets';
   copyFolders(srcArchiveDir, archiveContentDir);
   copyFolders(assetsDir, archiveAssetsDir);
 
-  createIndexHtml(archiveDir, archiveContentDir);
+  createIndexHtml(projectTitle, archiveDir, archiveContentDir);
 }

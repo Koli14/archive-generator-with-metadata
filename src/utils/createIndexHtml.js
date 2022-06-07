@@ -3,7 +3,7 @@ import path from 'path';
 import { readdir } from 'node:fs/promises';
 import createContent from './createContent.js';
 //
-export default async function createIndexHtml(archiveDir, archiveContentDir) {
+export default async function createIndexHtml(projectTitle, archiveDir, archiveContentDir) {
   let indexTemplate = fs.readFileSync('templates/index.html', 'utf8');
   const folderTemplate = fs.readFileSync('templates/treeView/folder.html', 'utf8');
   const fileTemplate = fs.readFileSync('templates/treeView/file.html', 'utf8');
@@ -24,8 +24,7 @@ export default async function createIndexHtml(archiveDir, archiveContentDir) {
           childs += fileTemplate.replace('${name}', fileNode).replace('${href}', relativePath + fileNode);
         }
       }
-      createContent(archiveContentDir, dir, fileNodes);
-      console.log(' ');
+      createContent(archiveDir, archiveContentDir, dir, fileNodes);
 
       return parent.replace('${childs}', childs);
     } catch (err) {
@@ -35,7 +34,7 @@ export default async function createIndexHtml(archiveDir, archiveContentDir) {
 
   const treeHtml = await createRecurcsiveTreeItem(archiveContentDir);
 
-  indexTemplate = indexTemplate.replace('${treeView}', treeHtml);
+  indexTemplate = indexTemplate.replace('${treeView}', treeHtml).replace('${projectTitle}', projectTitle);
   fs.writeFileSync(`${archiveDir}/index.html`, indexTemplate);
   // const createTreeView = function (dir, done) {
   //   fs.readdir(dir, function (err, treeHtml) {

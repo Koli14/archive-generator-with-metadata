@@ -1,14 +1,14 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-export default function createEmbed(archiveContentDir, dir, item) {
+export default function createEmbed(archiveDir, archiveContentDir, dir, item) {
   const page = fs.readFileSync('templates/content/page.html', 'utf8');
   const breadCrumbItem = fs.readFileSync('templates/content/breadCrumbItem.html', 'utf8');
   const embedBreadcrumbItem = fs.readFileSync('templates/content/embedBreadcrumbItem.html', 'utf8');
   const object = fs.readFileSync('templates/content/object.html', 'utf8');
 
   const breadcrumb = path
-    .relative(archiveContentDir, dir + '/' + item)
+    .relative(archiveDir, dir + '/' + item)
     .split(path.sep)
     .map((element, index, array) => {
       if (index == array.length - 1) {
