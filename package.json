@@ -1,6 +1,6 @@
 {
   "name": "archive-generator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "NodeJS based archive generator, wich generates from your files and folders a pure HTML-CSS archive, with tree-view",
   "type": "module",
   "main": "index.js",
