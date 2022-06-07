@@ -10,15 +10,13 @@ export default function createEmbed(archiveContentDir, dir, item) {
   const breadcrumb = path
     .relative(archiveContentDir, dir + '/' + item)
     .split(path.sep)
-    .map((item, index, array) => {
-      let url = '';
-      for (let j = 0; j <= index; j++) {
-        url += '/' + array[j];
-      }
+    .map((element, index, array) => {
       if (index == array.length - 1) {
-        return embedBreadcrumbItem.replaceAll('${item}', item);
+        return embedBreadcrumbItem.replaceAll('${item}', element);
       }
-      return breadCrumbItem.replace('${item}', item).replace('${href}', '../' + item);
+      return breadCrumbItem
+        .replace('${item}', element)
+        .replace('${href}', '../'.repeat(array.length - 1 - index) + element);
     })
     .join('\n');
 

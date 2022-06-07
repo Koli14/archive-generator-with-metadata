@@ -13,14 +13,10 @@ export default function createContent(archiveContentDir, dir, fileNodes) {
     .relative(archiveContentDir, dir)
     .split(path.sep)
     .map((item, index, array) => {
-      let url = '';
-      for (let j = 0; j <= index; j++) {
-        url += '/' + array[j];
-      }
       if (index == array.length - 1) {
         return activebreadCrumbItem.replace('${item}', item);
       }
-      return breadCrumbItem.replace('${item}', item).replace('${href}', '../' + item);
+      return breadCrumbItem.replace('${item}', item).replace('${href}', '../'.repeat(array.length - 1 - index) + item);
     })
     .join('\n');
 
