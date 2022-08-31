@@ -2,7 +2,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import { createEmbed } from './index.js';
 
-export default function createContent(archiveDir, archiveContentDir, dir, fileNodes) {
+export default function createContent(archiveDir, archiveContentDir, dir, fileNodes, metaData) {
   const page = fs.readFileSync('templates/content/page.html', 'utf8');
   const breadCrumbItem = fs.readFileSync('templates/content/breadCrumbItem.html', 'utf8');
   const activebreadCrumbItem = fs.readFileSync('templates/content/activeBreadcrumbItem.html', 'utf8');
@@ -27,12 +27,18 @@ export default function createContent(archiveDir, archiveContentDir, dir, fileNo
       if (!item.isDir) {
         createEmbed(archiveDir, archiveContentDir, dir, item);
       }
-
+      const relativePath = path.relative(archiveDir, dir + '/' + item.name).replaceAll(path.sep, '/');
+      const { revision, status, 'create date': createDate, originator, abnahmepflichtig, description } = metaData[relativePath] || {};
       return tableRow
         .replace('${href}', './' + path.basename(dir) + '/' + item.name)
         .replace('${item}', item.name)
-        .replace('${birthtime}', item.birthtime)
-        .replace('${mtime}', item.mtime)
+        .replace('${revision}', revision || '')
+        .replace('${status}', status || '')
+        .replace('${createDate}', createDate || '')
+        .replace('${originator}', originator || '')
+        .replace('${abnahmepflichtig}', abnahmepflichtig || '')
+        .replace('${description}', description || '')
+        // .replace('${size}',  meta['file length'] || item.size)
         .replace('${size}', item.size)
         .replace('${fileNodeType}', item.isDir ? 'fa-folder' : 'fa-file');
     })
@@ -45,11 +51,6 @@ export default function createContent(archiveDir, archiveContentDir, dir, fileNo
     .replaceAll('${assetsPath}', assetPath)
     .replace('${breadcrumb}', breadcrumb)
     .replace('${content}', table.replace('${rows}', tableRows));
-  //console.log(dir);
 
   fs.writeFileSync(dir + '.html', pageHtml);
-
-  //console.log(tableRows);
-
-  //table.replace('${rows}')
 }

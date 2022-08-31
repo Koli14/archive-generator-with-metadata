@@ -1,10 +1,11 @@
 import fs from 'fs-extra';
 import path from 'path';
 import { readdir } from 'node:fs/promises';
-import createContent from './createContent.js';
-import { formatBytes } from './index.js';
+import { formatBytes, createContent, createMetaData } from './index.js';
 
-export default async function createIndexHtml(projectTitle, archiveDir, archiveContentDir) {
+export default async function createIndexHtml(projectTitle, archiveDir, archiveContentDir, metaDataPath) {
+  const metaData = await createMetaData(metaDataPath);
+
   let indexTemplate = fs.readFileSync('templates/index.html', 'utf8');
   const folderTemplate = fs.readFileSync('templates/treeView/folder.html', 'utf8');
   const fileTemplate = fs.readFileSync('templates/treeView/file.html', 'utf8');
@@ -21,8 +22,6 @@ export default async function createIndexHtml(projectTitle, archiveDir, archiveC
             name: item,
             path: filePath,
             isDir: stat.isDirectory(),
-            birthtime: stat.birthtime.toLocaleString(),
-            mtime: stat.mtime.toLocaleString(),
             size: formatBytes(stat.size),
           };
         })
@@ -38,7 +37,7 @@ export default async function createIndexHtml(projectTitle, archiveDir, archiveC
           childs += fileTemplate.replace('${name}', fileNode.name).replace('${href}', relativePath + fileNode.name);
         }
       }
-      createContent(archiveDir, archiveContentDir, dir, fileNodes);
+      createContent(archiveDir, archiveContentDir, dir, fileNodes, metaData);
 
       return parent.replace('${childs}', childs);
     } catch (err) {
