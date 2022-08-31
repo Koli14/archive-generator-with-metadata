@@ -1,6 +1,6 @@
 {
-  "name": "archive-generator",
-  "version": "1.0.2",
+  "name": "archive-generator-with-metadata",
+  "version": "1.0.3",
   "description": "NodeJS based archive generator, wich generates from your files and folders a pure HTML-CSS archive, with tree-view",
   "type": "module",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Koli14/archive-generator.git"
+    "url": "git+https://github.com/Koli14/archive-generator-with-metadata.git"
   },
   "keywords": [
     "archive",
@@ -18,9 +18,9 @@
   "author": "Kolos Karácsony",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/Koli14/archive-generator/issues"
+    "url": "https://github.com/Koli14/archive-generator-with-metadata/issues"
   },
-  "homepage": "https://github.com/Koli14/archive-generator#readme",
+  "homepage": "https://github.com/Koli14/archive-generator-with-metadata#readme",
   "dependencies": {
     "csv-parse": "^5.3.0",
     "fs-extra": "^10.1.0"
