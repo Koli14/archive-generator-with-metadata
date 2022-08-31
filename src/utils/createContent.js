@@ -13,8 +13,6 @@ export default function createContent(archiveDir, archiveContentDir, dir, fileNo
     .relative(archiveDir, dir)
     .split(path.sep)
     .map((item, index, array) => {
-      //console.log(item, index, array);
-
       if (index == array.length - 1) {
         return activebreadCrumbItem.replace('${item}', item);
       }
@@ -34,6 +32,7 @@ export default function createContent(archiveDir, archiveContentDir, dir, fileNo
         .replace('${item}', item.name)
         .replace('${revision}', revision || '')
         .replace('${status}', status || '')
+        // Should we format Date?
         .replace('${createDate}', createDate || '')
         .replace('${originator}', originator || '')
         .replace('${abnahmepflichtig}', abnahmepflichtig || '')
