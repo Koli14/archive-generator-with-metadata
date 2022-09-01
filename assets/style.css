@@ -46,8 +46,7 @@ summary::-webkit-details-marker {
 }
 
 .tree-nav__item {
-  display: block;
-  position: relative;
+  display: flex;
 }
 
 .tree-nav__item .tree-nav__item {
@@ -72,6 +71,7 @@ summary::-webkit-details-marker {
   cursor: pointer;
   display: flex;
   align-items: center;
+  padding-right: 8px;
 }
 
 .tree-nav__item-title:hover {
