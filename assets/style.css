@@ -19,13 +19,16 @@ iframe {
 }
 
 .container-fluid a {
-  display: flex;
-  align-items: center;
   color: black;
   text-decoration: none;
 }
 
-.container-fluid a i {
+.table a {
+  display: flex;
+  align-items: center;
+}
+
+.table a i {
   margin-right: 6px;
   min-width: 16px;
 }
