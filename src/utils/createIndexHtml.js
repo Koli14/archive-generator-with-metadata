@@ -10,9 +10,6 @@ export default async function createIndexHtml(projectTitle, archiveDir, archiveC
   const folderTemplate = fs.readFileSync('templates/treeView/folder.html', 'utf8');
   const fileTemplate = fs.readFileSync('templates/treeView/file.html', 'utf8');
 
-  console.log('metaData: ', metaData);
-  
-
   async function createRecurcsiveTreeItem(dir, parent = '${childs}') {
     try {
       const fileNodes = await (

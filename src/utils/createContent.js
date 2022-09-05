@@ -22,12 +22,10 @@ export default function createContent(archiveDir, archiveContentDir, dir, fileNo
 
   const tableRows = fileNodes
     .map((item) => {
-      const relativePath = path.relative(archiveDir, dir + '/' + item.name).replaceAll(path.sep, '/');
       if (!item.isDir) {
         createEmbed(archiveDir, archiveContentDir, dir, item);
-        console.log('relativePath: ', relativePath);
-        console.log('metaData[relativePath]: ', metaData[relativePath]);        
       }
+      const relativePath = path.relative(archiveDir, dir + '/' + item.name).replaceAll(path.sep, '/');
       const { revision, status, 'create date': createDate, originator, abnahmepflichtig, description } = metaData[relativePath] || {};
       return tableRow
         .replace('${href}', './' + path.basename(dir) + '/' + item.name)
